@@ -5,7 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL; // Ensure the variable is pre
 
 export const loginUser = async ({ email, password }: LoginFormType) => {
   try {
-    const response = await axios.post(`${BASE_URL}/auth/login`, {
+    const response = await axios.post(`${BASE_URL}/admin/login`, {
       email,
       password,
       deviceType: "web",

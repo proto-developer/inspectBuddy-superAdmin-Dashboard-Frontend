@@ -3,6 +3,10 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import "@mantine/core/styles.css";
 import { createTheme, MantineProvider } from "@mantine/core";
+import LoadingBackdrop from "./components/ui/LoadingBackdrop";
+import { QueryClientProvider } from "@tanstack/react-query";
+import queryClient from "./lib/queryClient";
+import ToastProvider from "./lib/toaster";
 
 const theme = createTheme({
   cursorType: "pointer",
@@ -26,7 +30,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${plusJakartaSans.variable}`}>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <QueryClientProvider client={queryClient}>
+          <MantineProvider theme={theme}>
+            {children}
+            <ToastProvider />
+            <LoadingBackdrop />
+          </MantineProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

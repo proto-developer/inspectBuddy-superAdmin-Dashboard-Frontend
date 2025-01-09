@@ -1,6 +1,6 @@
 import Image from "next/image";
-import AuthNavbar from "./components/auth/AuthNavbar";
-import LoginForm from "./components/auth/LoginForm";
+import AuthNavbar from "../../components/auth/AuthNavbar";
+import LoginForm from "../../components/auth/LoginForm";
 
 export default function Login() {
   return (
@@ -13,13 +13,13 @@ export default function Login() {
         </div>
       </section>
       {/* Right Side Section */}
-      <section className="loginPicSection min-h-screen min-[992px]:block hidden">
+      <section className="loginPicSection min-h-screen min-[992px]:block hidden relative">
         <Image
-          width={100}
-          height={100}
+          fill
+          priority
           src="/auth-page-pic.svg"
           alt="platform Snapshot"
-          className="object-cover w-full h-full object-left"
+          className="object-cover object-left"
         />
       </section>
     </main>

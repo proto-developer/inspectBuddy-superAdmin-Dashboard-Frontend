@@ -1,32 +1,30 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 export const useAdminNavbarTitle = () => {
-  const router = useRouter();
+  const pathname = usePathname();
 
   const [pageTitle, setPageTitle] = useState<string>("Home");
   const [pagePath, setPagePath] = useState<string>("/");
 
   useEffect(() => {
-    const currentPath = router.pathname;
-
-    if (currentPath === "/admin/dashboard") {
+    if (pathname === "/dashboard") {
       setPageTitle("Dashboard");
-      setPagePath("/admin");
-    } else if (currentPath === "/admin/users") {
+      setPagePath("/dashboard");
+    } else if (pathname === "/users") {
       setPageTitle("User Detail");
-      setPagePath("/admin/users");
-    } else if (currentPath.startsWith("/admin/user-details")) {
+      setPagePath("/users");
+    } else if (pathname.startsWith("/user-details")) {
       const dynamicPathPattern = /^\/admin\/user-details(\/[^/]+)?(\/[^/]+)?$/;
-      if (dynamicPathPattern.test(currentPath)) {
+      if (dynamicPathPattern.test(pathname)) {
         setPageTitle("User's Details");
-        setPagePath("/admin/user-details");
+        setPagePath("/user-details");
       }
     } else {
       setPageTitle("Dashboard");
       setPagePath("/admin");
     }
-  }, [router.pathname]);
+  }, [pathname]);
 
   return {
     pageTitle,
