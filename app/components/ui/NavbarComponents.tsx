@@ -132,8 +132,6 @@ export const UserInfoSection = ({
 export const UserNavMenu = () => {
   const userData = useUserStore((state) => state.userData);
 
-  console.log("User Data => User Nav", userData);
-
   const handleLogout = () => {};
 
   return (
