@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import "@mantine/core/styles.css";
+import '@mantine/charts/styles.css';
 import { createTheme, MantineProvider } from "@mantine/core";
 import LoadingBackdrop from "./components/ui/LoadingBackdrop";
 import { QueryClientProvider } from "@tanstack/react-query";
