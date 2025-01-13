@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
 
   // Redirect the root path (/) to /auth/login
   if (url.pathname === "/") {
-    return NextResponse.redirect(new URL("/auth/login", url));
+    return NextResponse.redirect(new URL("/auth", url));
   }
 
   // Allow all other requests

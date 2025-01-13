@@ -1,7 +1,7 @@
 import axios from "axios";
 import { LoginFormType } from "../types/auth";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL; // Ensure the variable is prefixed with NEXT_PUBLIC if it's used on the client side.
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const loginUser = async ({ email, password }: LoginFormType) => {
   try {

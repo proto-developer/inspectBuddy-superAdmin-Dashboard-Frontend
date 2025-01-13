@@ -1,6 +1,6 @@
 import Image from "next/image";
-import AuthNavbar from "../../components/auth/AuthNavbar";
-import LoginForm from "../../components/auth/LoginForm";
+import AuthNavbar from "../components/auth/AuthNavbar";
+import LoginForm from "../components/auth/LoginForm";
 
 export default function Login() {
   return (
