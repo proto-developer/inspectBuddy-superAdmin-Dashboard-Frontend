@@ -11,7 +11,7 @@ export default function SideBarLayout({
     <>
       <main className="App overflow-x-hidden">
         <Navbar />
-        <section className="md:flex">
+        <section className="md:flex md:mt-[96px] mt-[72px] relative">
           <Sidebar />
           <div className="flex-1 lg:py-[24px] xl:px-[32px] lg:px-[24px] p-[16px] md:h-[calc(100dvh-96px)] h-[calc(100dvh-72px)] overflow-auto">
             {children}
