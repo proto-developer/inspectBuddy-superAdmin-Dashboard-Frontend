@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/navbar/Navbar";
+import UserNavbar from "../components/navbar/Navbar";
 import Sidebar from "../components/ui/Sidebar";
 
 export default function SideBarLayout({
@@ -10,7 +10,7 @@ export default function SideBarLayout({
   return (
     <>
       <main className="App overflow-x-hidden">
-        <Navbar />
+        <UserNavbar />
         <section className="md:flex md:mt-[96px] mt-[72px] relative">
           <Sidebar />
           <div className="flex-1 lg:py-[24px] xl:px-[32px] lg:px-[24px] p-[16px] md:h-[calc(100dvh-96px)] h-[calc(100dvh-72px)] overflow-auto">

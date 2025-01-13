@@ -8,6 +8,16 @@ export type LoaderStoreTypes = {
 export type UserStoreTypes = {
   isLoggedIn: boolean;
   setIsLoggedIn: (value: boolean) => void;
-  userData: {};
-  setUserData: (value: {}) => void;
+  userData: {
+    email: string;
+    fullname: string;
+    role: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePicture: {
+      url: string;
+      _id: string;
+    };
+  };
+  setUserData: (value: UserStoreTypes["userData"]) => void;
 };

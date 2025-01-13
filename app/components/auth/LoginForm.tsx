@@ -41,7 +41,15 @@ const LoginForm = () => {
 
     onSuccess: (response) => {
       if (response.success) {
-        setUserData(response.data);
+        const updatedData = {
+          ...response.data,
+          profilePicture: {
+            url: "",
+            _id: "",
+          },
+        };
+
+        setUserData(updatedData);
         setIsLoggedIn(true);
         router.replace("/dashboard"); // Navigate to the dashboard
         toast.success("Login", {

@@ -26,3 +26,28 @@ export const loginUser = async ({ email, password }: LoginFormType) => {
     };
   }
 };
+
+export const checkAuthStatus = async () => {
+  try {
+    const response = await axios.post(`${BASE_URL}/api/auth/status`, {
+      withCredentials: true,
+    });
+
+    return {
+      success: true,
+      data: response.data, // Ensure response data exists before accessing `userData`.
+    };
+  } catch (error: any) {
+    console.error("Authentication check failed:", error);
+
+    // Extract a more user-friendly error message if available
+    const errorMessage =
+      error.response?.data?.message || "An unexpected error occurred.";
+
+    // Return the error with a consistent structure
+    return {
+      success: false,
+      message: errorMessage,
+    };
+  }
+};

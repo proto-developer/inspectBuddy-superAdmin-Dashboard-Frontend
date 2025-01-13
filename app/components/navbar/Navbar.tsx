@@ -1,7 +1,21 @@
-import { NavbarRoot } from "../ui/NavbarComponents";
+import {
+  NavbarRoot,
+  NavbarTitleSection,
+  NotificationButton,
+  UserInfoSection,
+  UserNavMenu,
+} from "../ui/NavbarComponents";
 
 const Navbar = () => {
-  return <NavbarRoot>Navbar</NavbarRoot>;
+  return (
+    <NavbarRoot>
+      <NavbarTitleSection />
+      <UserInfoSection>
+        <NotificationButton />
+        <UserNavMenu />
+      </UserInfoSection>
+    </NavbarRoot>
+  );
 };
 
 export default Navbar;
