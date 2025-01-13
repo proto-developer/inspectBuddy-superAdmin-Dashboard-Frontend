@@ -5,8 +5,10 @@ import { UserStoreTypes } from "../types/globalStore";
 export const useUserStore = create<UserStoreTypes>()(
   persist(
     (set) => ({
+      // user's login status
       isLoggedIn: false,
       setIsLoggedIn: (value: boolean) => set(() => ({ isLoggedIn: value })),
+      // user's own data
       userData: {
         email: "",
         fullname: "",
