@@ -2,6 +2,7 @@
 import {
   DropdownFilter,
   FiltersTopBar,
+  SearchFilter,
 } from "@/app/components/ui/FilterComponents";
 import React from "react";
 
@@ -14,6 +15,11 @@ const UsersPage = () => {
             console.log(value);
           }}
         />
+        <SearchFilter placeholder="Search Users..." onSearch={
+          (value) => {
+            console.log("Search Query", value)
+          }
+        } />
       </FiltersTopBar>
     </React.Fragment>
   );

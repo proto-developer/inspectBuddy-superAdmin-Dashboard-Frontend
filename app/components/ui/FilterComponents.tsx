@@ -1,9 +1,10 @@
-"use client";
 import { USERS_SUBSCRIPTIONS_TYPE } from "@/app/constants/filters";
-import { DropdownFilterTypes } from "@/app/types/filters";
+import { DropdownFilterTypes, SearchFilterTypes } from "@/app/types/filters";
 import { ComboboxItem, Select } from "@mantine/core";
-import { useState } from "react";
-import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
+import { useCallback, useState } from "react";
+import { IconChevronDown } from "@tabler/icons-react";
+import Image from "next/image";
+import debounce from "lodash.debounce";
 
 const FiltersTopBar = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -14,13 +15,11 @@ const FiltersTopBar = ({ children }: { children: React.ReactNode }) => {
 };
 
 const DropdownFilter = ({ handleFilterChange }: DropdownFilterTypes) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState<ComboboxItem | null>(
     USERS_SUBSCRIPTIONS_TYPE[0] || null
   );
 
   const handleChange = (option: ComboboxItem | null) => {
-    setIsOpen(false);
     if (!option) return;
     setValue(option);
     handleFilterChange(option.value);
@@ -35,17 +34,46 @@ const DropdownFilter = ({ handleFilterChange }: DropdownFilterTypes) => {
       comboboxProps={{
         transitionProps: { transition: "pop", duration: 200 },
         dropdownPadding: 8,
-        onOpen: () => setIsOpen(true),
       }}
-      rightSection={
-        isOpen ? (
-          <IconChevronUp size={20} className="text-[#6C727F]" />
-        ) : (
-          <IconChevronDown size={20} className="text-[#6C727F]" />
-        )
-      }
+      rightSection={<IconChevronDown size={18} className="text-[#6C727F]" />}
     />
   );
 };
 
-export { FiltersTopBar, DropdownFilter };
+const SearchFilter = ({ placeholder, onSearch }: SearchFilterTypes) => {
+  const [searchBarValue, setSearchBarValue] = useState("");
+
+  const debouncedHandleSearch = useCallback(
+    debounce((query: string) => onSearch(query), 500),
+    []
+  );
+
+  return (
+    <div
+      className={`flex w-[305px] h-[40px] py-[8px] px-[16px] bg-[#F3F8FF] rounded-[8px] gap-[8px]`}
+    >
+      <Image
+        width={24}
+        height={24}
+        src="/icons/search-icon.svg"
+        alt="search-icon"
+      />
+      <input
+        type="search"
+        id="inspections-search"
+        value={searchBarValue}
+        onChange={(e) => {
+          setSearchBarValue(e.target.value);
+          debouncedHandleSearch(e.target.value);
+        }}
+        // onKeyDown={(e) =>
+        //   e.key === "Enter" && debouncedHandleSearch(e.currentTarget.value)
+        // }
+        placeholder={placeholder ? placeholder : "Search..."}
+        className="px-[8px] w-full bg-[#F3F8FF] border-0 focus:outline-none h-[24px] font-medium text-darkBlue md:text-[16px] sm:text-[14px]"
+      />
+    </div>
+  );
+};
+
+export { FiltersTopBar, DropdownFilter, SearchFilter };

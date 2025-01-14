@@ -3,3 +3,8 @@ export type DropdownFilterTypes = {
   // setFiltersData: (data: object) => void;
   handleFilterChange: (value: string) => void;
 };
+
+export type SearchFilterTypes = {
+  onSearch: (value: string) => void;
+  placeholder?: string;
+};
