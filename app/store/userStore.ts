@@ -22,6 +22,11 @@ export const useUserStore = create<UserStoreTypes>()(
       },
       setUserData: (value: UserStoreTypes["userData"]) =>
         set(() => ({ userData: value })),
+
+      // all the users registered on the platform
+      customersData: {},
+      setCustomersData: (value: UserStoreTypes["customersData"]) =>
+        set(() => ({ customersData: value })),
     }),
     {
       name: "user-storage",

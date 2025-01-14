@@ -5,11 +5,17 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const loginUser = async ({ email, password }: LoginFormType) => {
   try {
-    const response = await axios.post(`${BASE_URL}/admin/login`, {
-      email,
-      password,
-      deviceType: "web",
-    });
+    const response = await axios.post(
+      `${BASE_URL}/admin/login`,
+      {
+        email,
+        password,
+        deviceType: "web",
+      },
+      {
+        withCredentials: true,
+      }
+    );
 
     return {
       success: true,

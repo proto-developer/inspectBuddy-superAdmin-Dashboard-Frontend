@@ -65,7 +65,7 @@ export const NavbarRoot = ({ children }: { children: React.ReactNode }) => {
       {!customPagesTitles.includes(pageTitle) && <NavbarLogo />}
       <section
         className={`md:h-[96px] h-[72px] ${
-          customPagesTitles.includes(pageTitle)
+          customPagesTitles.includes(pageTitle) || !pageTitle
             ? "w-[calc(100vw-var(--scrollbar-width))]"
             : "min-[1630px]:w-[calc(100vw-305px-var(--scrollbar-width))] lg:w-[calc(100vw-220px-var(--scrollbar-width))] w-[calc(100vw-var(--scrollbar-width))]"
         } md:px-[32px] px-[20px] flex items-center justify-between bg-white border-b-[1.5px] border-b-[#E4F0FF]`}
@@ -138,21 +138,11 @@ export const UserNavMenu = () => {
     <Menu shadow="md" id="userProfileDropDownNavbar">
       <Menu.Target>
         <button className="sm:px-[12px] px-[8px] sm:h-[48px] h-[40px] rounded-[8px] border-[1.5px] border-[#CCE2FF] flex items-center justify-center gap-[8px]">
-          {userData?.profilePicture?.url ? (
-            <Image
-              width={32}
-              height={32}
-              src={userData?.profilePicture?.url}
-              alt="arrowDown-icon"
-              priority
-            />
-          ) : (
-            <div className="w-[32px] h-[32px] bg-primary rounded-full flex items-center justify-center">
-              <p className="text-white text-[16px] font-bold uppercase">
-                {userData?.fullname?.split(" ")[0]?.slice(0, 2)}
-              </p>
-            </div>
-          )}
+          <div className="w-[32px] h-[32px] bg-primary rounded-full flex items-center justify-center">
+            <p className="text-white text-[16px] font-bold uppercase">
+              {userData?.fullname?.split(" ")[0]?.slice(0, 2)}
+            </p>
+          </div>
 
           <span className="font-medium text-[16px] text-darkBlue sm:block hidden">
             {/* Show first name of user name */}

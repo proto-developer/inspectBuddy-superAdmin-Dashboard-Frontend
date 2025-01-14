@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useLoaderStore } from "../store/loaderStore";
 
 export const useAdminNavbarTitle = () => {
   const pathname = usePathname();
+  const setIsLoading = useLoaderStore((state) => state.setIsLoading);
 
-  const [pageTitle, setPageTitle] = useState<string>("Home");
+  const [pageTitle, setPageTitle] = useState<string>("Dashboard");
   const [pagePath, setPagePath] = useState<string>("/");
 
   useEffect(() => {
+    setIsLoading(true);
     if (pathname === "/dashboard") {
       setPageTitle("Dashboard");
       setPagePath("/dashboard");
@@ -24,6 +27,7 @@ export const useAdminNavbarTitle = () => {
       setPageTitle("Dashboard");
       setPagePath("/admin");
     }
+    setIsLoading(false);
   }, [pathname]);
 
   return {

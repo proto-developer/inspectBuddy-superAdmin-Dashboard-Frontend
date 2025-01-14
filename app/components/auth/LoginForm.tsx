@@ -1,7 +1,7 @@
 "use client";
 import { LoginFormType, LoginResponse } from "@/app/types/auth";
 import { useForm } from "@mantine/form";
-import React, { useEffect } from "react";
+import React from "react";
 import AuthFormHeader from "./AuthFormHeader";
 import { Loader, PasswordInput, TextInput } from "@mantine/core";
 import CustomButton from "./../ui/CustomButton";

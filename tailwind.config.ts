@@ -13,6 +13,7 @@ export default {
       },
       screens: {
         xs: "330px", // Custom breakpoint
+        "min-1150": "1150px",
       },
       colors: {
         primary: "#2A85FF",

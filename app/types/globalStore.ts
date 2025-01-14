@@ -1,3 +1,5 @@
+import { SingleUserType } from "./allUsers";
+
 // Type for User Store
 export type LoaderStoreTypes = {
   isLoading: boolean;
@@ -20,4 +22,13 @@ export type UserStoreTypes = {
     };
   };
   setUserData: (value: UserStoreTypes["userData"]) => void;
+
+  // all the users registered on the platform
+  customersData: {
+    users: SingleUserType[];
+    totalUsers: number;
+    totalPages: number;
+    currentPage: number;
+  };
+  setCustomersData: (value: UserStoreTypes["customersData"]) => void;
 };
