@@ -6,7 +6,7 @@ type IconLinkProps = {
   label: string;
   href: string;
   className?: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
 };
 
 const IconLink = ({ id, href, label, icon, className }: IconLinkProps) => {

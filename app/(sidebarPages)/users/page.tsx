@@ -8,16 +8,13 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllUsers } from "@/app/api/users";
 import { toast } from "sonner";
-import { Table } from "@mantine/core";
 import { SingleUserType } from "@/app/types/allUsers";
-import {
-  TableRoot,
-  UserSubscriptionCard,
-} from "@/app/components/ui/DataTableComponents";
 import IconLink from "@/app/components/ui/IconLink";
 import { IconEyeDown } from "@tabler/icons-react";
 import { DELETE_ICON } from "@/public/icons/Dynamic_Icons";
 import IconButton from "@/app/components/ui/IconButton";
+import { USERS_TABLE_HEADINGS } from "@/app/constants/itemTables";
+import Table from "@/app/components/ui/DataTableComponents";
 
 const UsersPage = () => {
   const [filtersData, setFiltersData] = useState({
@@ -26,7 +23,7 @@ const UsersPage = () => {
     search: "",
   });
 
-  const { data, isLoading, isError, error, isSuccess } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ["fetchAllUsers", filtersData],
     queryFn: () => fetchAllUsers(filtersData),
   });
@@ -38,40 +35,48 @@ const UsersPage = () => {
     });
   }
 
-  if (isSuccess) {
-    toast.success("Success!", {
-      description: "Users Fetched Successfully.",
-      duration: 3000,
-    });
-  }
+  // if (isSuccess) {
+  //   toast.success("Success!", {
+  //     description: "Users Fetched Successfully.",
+  //     duration: 3000,
+  //   });
+  // }
 
   const rows = data?.users?.map((user: SingleUserType, index: number) => (
-    <Table.Tr key={user._id}>
-      <Table.Td>{index + 1}</Table.Td>
-      <Table.Td>{user.fullname}</Table.Td>
-      <Table.Td>{user.email}</Table.Td>
-      <Table.Td>
-        <UserSubscriptionCard subscriptionPlan={user.role} />
-      </Table.Td>
-      <Table.Td className="flex items-center gap-[12px] justify-end">
-        <IconLink
-          href="#"
-          label="View Detail"
-          icon={<IconEyeDown className="w-[16px] h-[16px]" />}
-        />
-        <IconButton
-          onClick={() => {
-            console.log("Delete");
-          }}
-          icon={<DELETE_ICON className="text-[#FF613E]" />}
-        />
-      </Table.Td>
-    </Table.Tr>
+    <Table.ItemRoot key={user._id}>
+      <Table.SingleColumn>
+        <p className="text-[14px] font-medium text-gray-dark">{index + 1}</p>
+      </Table.SingleColumn>
+      <Table.SingleColumn>
+        <p className="text-[14px] font-medium text-gray-dark">
+          {user.fullname}
+        </p>
+      </Table.SingleColumn>
+      <Table.DoubleColumn>
+        <p className="text-[14px] font-medium text-gray-dark">{user.email}</p>
+      </Table.DoubleColumn>
+      <Table.SingleColumn>
+        <Table.UserSubscriptionCard subscriptionPlan={user.role} />
+      </Table.SingleColumn>
+      <Table.DoubleColumn>
+        <Table.ItemActions>
+          <IconLink
+            href={`/users/${user._id}`}
+            icon={<IconEyeDown />}
+            label="View Details"
+          />
+          <IconButton
+            type="button"
+            icon={<DELETE_ICON className="text-[#FF613E]" />}
+          />
+        </Table.ItemActions>
+      </Table.DoubleColumn>
+    </Table.ItemRoot>
   ));
 
   return (
     <React.Fragment>
-      <FiltersTopBar>
+      <FiltersTopBar className="md:pr-[24px] pr-[12px]">
         <DropdownFilter
           handleFilterChange={(value) =>
             setFiltersData({ ...filtersData, subscriptionPlan: value })
@@ -84,22 +89,45 @@ const UsersPage = () => {
           }
         />
       </FiltersTopBar>
-      <TableRoot className="md:px-[24px] px-[12px] sm:py-[24px] py-[12px]">
-        <Table>
-          <Table.Thead className="!rounded-[8px] xl:!p-[24px] lg:!p-[12px] !bg-[#F3F8FF] !p-[12px]">
-            <Table.Tr>
-              <Table.Th>S#NO</Table.Th>
-              <Table.Th>User Name</Table.Th>
-              <Table.Th>User Email</Table.Th>
-              <Table.Th>Plan Status</Table.Th>
-              <Table.Th>Plan Status</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>{rows}</Table.Tbody>
-        </Table>
-      </TableRoot>
-
-      {isLoading && <div>Loading...</div>}
+      <Table.Root className="md:px-[24px] px-[12px] sm:py-[24px] py-[12px]">
+        <Table.Header>
+          {USERS_TABLE_HEADINGS.map((heading) =>
+            heading.key === "userEmail" ? (
+              <Table.DoubleColumn key={heading.key}>
+                <Table.HeaderItem heading={heading.value} />
+              </Table.DoubleColumn>
+            ) : (
+              <Table.SingleColumn key={heading.key}>
+                <Table.HeaderItem heading={heading.value} />
+              </Table.SingleColumn>
+            )
+          )}
+        </Table.Header>
+        <Table.Body>
+          {isLoading ? (
+            <Table.ItemsSkeleton />
+          ) : data?.users?.length < 1 ? (
+            <div className="flex justify-center items-center h-full">
+              <p className="text-[14px] font-medium text-gray-dark text-center">
+                No Users Found! <br /> Add a new User to get started.
+              </p>
+            </div>
+          ) : (
+            rows
+          )}
+        </Table.Body>
+        <Table.Pagination
+          filtersData={filtersData}
+          setFiltersData={(value) =>
+            setFiltersData({ ...filtersData, page: value.page })
+          }
+          paginationData={{
+            totalPages: data?.totalPages,
+            currentPage: data?.currentPage,
+            totalItems: data?.totalUsers,
+          }}
+        />
+      </Table.Root>
     </React.Fragment>
   );
 };
